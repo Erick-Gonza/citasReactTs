@@ -1,12 +1,14 @@
 import { useState } from 'react'
 
-const Form = ({ setPatients }) => {
+const Form = ({ addPatient }) => {
   const [error, setError] = useState(false)
-  const [data, setData] = useState()
-
-  const addPatient = (patient) => {
-    setPatients((prevPatients) => [...prevPatients, patient])
-  }
+  const [data, setData] = useState({
+    petName: '',
+    ownerName: '',
+    email: '',
+    entryDate: '',
+    symptoms: '',
+  })
 
   const handleChange = (e) => {
     setData({
@@ -17,21 +19,20 @@ const Form = ({ setPatients }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+
     if (
-      [
-        data?.petName,
-        data?.ownerName,
-        data?.email,
-        data?.entryDate,
-        data?.symptoms,
-      ].includes('')
+      !data.petName ||
+      !data.ownerName ||
+      !data.email ||
+      !data.entryDate ||
+      !data.symptoms
     ) {
       setError(true)
       return
     }
 
     setError(false)
-    console.log(data)
+    addPatient(data)
   }
 
   return (
@@ -107,11 +108,11 @@ const Form = ({ setPatients }) => {
         </section>
 
         <section className="mb-2">
-          <label htmlFor="message" className="block font-bold mb-2">
-            Entry Date
+          <label htmlFor="symptoms" className="block font-bold mb-2">
+            Symptoms
           </label>
           <textarea
-            id="message"
+            id="symptoms"
             className="border-2 w-full p-2 rounded-md placeholder-gray-500 resize-none"
             cols={30}
             rows={5}

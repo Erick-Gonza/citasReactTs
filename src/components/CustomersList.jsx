@@ -1,6 +1,6 @@
 import Patient from './Patient'
 
-const CustomersList = () => {
+const CustomersList = ({ patients }) => {
   return (
     <section className="w-full h-screen md:w-1/2 lg:w-3/5 mb-4 md:mb-6 lg:mb-10 md: overflow-y-scroll lg:overflow-y-auto">
       <h2 className="font-black text-2xl text-slate-200 text-center mb-2">
@@ -12,13 +12,21 @@ const CustomersList = () => {
           Patients & appointments.
         </span>
       </p>
-      <Patient
-        petName="Ahri"
-        ownerName="Erick Gzz"
-        email="test@test.com"
-        entryDate="02/16/2023"
-        symptoms="Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum veniam officiis alias cum asperiores praesentium quidem ut explicabo nostrum, eius rerum ab quam aliquam quibusdam quos natus perferendis fugiat commodi."
-      />
+      {patients.length === 0 ? (
+        <p className="text-center text-lg text-slate-200">
+          There are no patients yet.
+        </p>
+      ) : null}
+      {patients.map((patient) => (
+        <Patient
+          petName={patient.petName}
+          ownerName={patient.ownerName}
+          email={patient.email}
+          entryDate={patient.entryDate}
+          symptoms={patient.symptoms}
+          key={patient.petName}
+        />
+      ))}
     </section>
   )
 }
